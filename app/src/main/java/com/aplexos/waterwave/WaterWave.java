@@ -54,15 +54,10 @@ public class WaterWave extends View implements View.OnClickListener {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, 0xffefefef, 0xfff5f5f5, Shader.TileMode.CLAMP);
-        //RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, 0xffefefef, 0xfff5f5f5, Shader.TileMode.CLAMP);
         RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, new int[]{0x00f5f5f5, 0x88dfdfdf, 0x00f5f5f5}, new float[]{0.4f, 0.7f, 1.0f }, Shader.TileMode.CLAMP);
         paint.setShader(radialGradient);
         canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, paint);
 
-        //radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, (radius - 50) > 0 ? (radius - 50) : 1, 0xffffffff, 0xffefefef, Shader.TileMode.CLAMP);
-        //paint.setShader(radialGradient);
-        //canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2,  (radius - 50) > 0 ? (radius - 50) : 1, paint);
         paint.reset();
     }
 
