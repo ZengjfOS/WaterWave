@@ -15,7 +15,7 @@ import android.view.View;
 public class WaterWave extends View implements View.OnClickListener {
     Paint paint;
     int radius = 1;
-    float rate = 0.02f;
+    float rate = 0.03f;
     public WaterWave(Context context) {
         this(context, null);
     }
@@ -56,7 +56,7 @@ public class WaterWave extends View implements View.OnClickListener {
         super.onDraw(canvas);
         //RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, 0xffefefef, 0xfff5f5f5, Shader.TileMode.CLAMP);
         //RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, 0xffefefef, 0xfff5f5f5, Shader.TileMode.CLAMP);
-        RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, new int[]{0xfff5f5f5, 0xffefefef, 0xfff5f5f5}, new float[]{0.6f, 0.8f, 1.0f }, Shader.TileMode.CLAMP);
+        RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, new int[]{0x00f5f5f5, 0x88dfdfdf, 0x00f5f5f5}, new float[]{0.4f, 0.7f, 1.0f }, Shader.TileMode.CLAMP);
         paint.setShader(radialGradient);
         canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, paint);
 
