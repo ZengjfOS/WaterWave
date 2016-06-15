@@ -14,7 +14,8 @@ import android.view.View;
  */
 public class WaterWave extends View implements View.OnClickListener {
     Paint paint;
-    int radius = 0;
+    int radius = 1;
+    float rate = 0.02f;
     public WaterWave(Context context) {
         this(context, null);
     }
@@ -31,10 +32,11 @@ public class WaterWave extends View implements View.OnClickListener {
             @Override
             public void run() {
                 while (true) {
-                    if (radius > 350 ) {
-                        radius = 0;
+                    if (radius > 750 ) {
+                        radius = 1;
                     } else {
                         radius += 3;
+                        radius = radius + (int)(radius * rate);
                     }
 
                     postInvalidate();
@@ -52,9 +54,15 @@ public class WaterWave extends View implements View.OnClickListener {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, 50, Color.GREEN, Color.RED, Shader.TileMode.MIRROR);
+        //RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, 0xffefefef, 0xfff5f5f5, Shader.TileMode.CLAMP);
+        //RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, 0xffefefef, 0xfff5f5f5, Shader.TileMode.CLAMP);
+        RadialGradient radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, new int[]{0xfff5f5f5, 0xffefefef, 0xfff5f5f5}, new float[]{0.6f, 0.8f, 1.0f }, Shader.TileMode.CLAMP);
         paint.setShader(radialGradient);
         canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2, radius, paint);
+
+        //radialGradient = new RadialGradient(getMeasuredWidth()/2, getMeasuredHeight()/2, (radius - 50) > 0 ? (radius - 50) : 1, 0xffffffff, 0xffefefef, Shader.TileMode.CLAMP);
+        //paint.setShader(radialGradient);
+        //canvas.drawCircle(getMeasuredWidth()/2, getMeasuredHeight()/2,  (radius - 50) > 0 ? (radius - 50) : 1, paint);
         paint.reset();
     }
 
