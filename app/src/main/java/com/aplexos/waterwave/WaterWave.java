@@ -18,8 +18,6 @@ import java.util.Collections;
  */
 public class WaterWave extends View {
     Paint paint;
-    int center_x = 0;
-    int center_y = 0;
 
     ArrayList<Raindrop> raindrops;
 
@@ -71,23 +69,21 @@ public class WaterWave extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        for (Raindrop raindrop : raindrops) {
+        for (Raindrop raindrop : raindrops)
             raindrop.drawRaindrop(canvas, paint);
-        }
-
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        center_x = (int)event.getX();
-        center_y = (int)event.getY();
-        raindrops.add(new Raindrop(center_x, center_y, 1));
+
+        raindrops.add(new Raindrop((int)event.getX(), (int)event.getY(), 1));
 
         return super.onTouchEvent(event);
     }
 }
 
 class Raindrop {
+
     int x;
     int y;
     int currentRadius = 1;
