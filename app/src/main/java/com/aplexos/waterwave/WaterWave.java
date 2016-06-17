@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by aplex on 16-6-15.
@@ -75,11 +74,53 @@ public class WaterWave extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // get pointer index from the event object
+        int pointerIndex = event.getActionIndex();
 
-        raindrops.add(new Raindrop((int)event.getX(), (int)event.getY(), 1));
+        // get pointer ID
+        int pointerId = event.getPointerId(pointerIndex);
 
+        // get masked (not specific to a pointer) action
+        int maskedAction = event.getActionMasked();
+
+        switch (maskedAction) {
+
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                // We have a new pointer. Lets add it to the list of pointers
+
+                Log.e("WaterWave", "" + event.getPointerCount());
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: { // a pointer was moved
+                for (int size = event.getPointerCount(), i = 0; i < size; i++) {
+                }
+                Log.e("WaterWave", "" + event.getPointerCount());
+                break;
+            }
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_CANCEL: {
+                Log.e("WaterWave", "" + event.getPointerCount());
+                break;
+            }
+        }
         return super.onTouchEvent(event);
     }
+
+    /*
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        //raindrops.add(new Raindrop((int)event.getX(), (int)event.getY(), 1));
+        for (int i = 0; i < event.getPointerCount(); i++ ) {
+            raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
+        }
+        Log.e("WaterWave", "" + event.getPointerCount());
+
+        return false;
+    }
+    */
 }
 
 class Raindrop {
