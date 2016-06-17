@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -71,10 +72,16 @@ public class WaterWave extends View {
             raindrop.drawRaindrop(canvas, paint);
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        int action = event.getAction() & MotionEvent.ACTION_MASK;
+        for (int i = 0; i < event.getPointerCount(); i++ )
+            raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
 
+        //raindrops.add(new Raindrop((int) event.getX(), (int) event.getY(), 1));
+
+        /*
+        int action = event.getAction() & MotionEvent.ACTION_MASK;
         switch(action) {
             case MotionEvent.ACTION_DOWN :
                 break;
@@ -91,9 +98,10 @@ public class WaterWave extends View {
 
                 break;
             case MotionEvent.ACTION_UP :
-                raindrops.add(new Raindrop((int) event.getX(), (int) event.getY(), 1));
+               raindrops.add(new Raindrop((int) event.getX(), (int) event.getY(), 1));
                 break;
         }
+        */
         return true;
     }
 }
