@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -42,7 +41,7 @@ public class WaterWave extends View {
             public void run() {
                 while (true) {
 
-                    newRaindrops = new ArrayList<Raindrop>();
+                    newRaindrops = new ArrayList<>();
                     for (int i = 0; i < raindrops.size(); i++) {
                         Raindrop raindrop = raindrops.get(i);
                         if (raindrop.isInRadius()) {
@@ -72,55 +71,31 @@ public class WaterWave extends View {
             raindrop.drawRaindrop(canvas, paint);
     }
 
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // get pointer index from the event object
-        int pointerIndex = event.getActionIndex();
 
-        // get pointer ID
-        int pointerId = event.getPointerId(pointerIndex);
+        int action = event.getAction() & MotionEvent.ACTION_MASK;
 
-        // get masked (not specific to a pointer) action
-        int maskedAction = event.getActionMasked();
-
-        switch (maskedAction) {
-
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN: {
-                // We have a new pointer. Lets add it to the list of pointers
-
-                Log.e("WaterWave", "" + event.getPointerCount());
+        switch(action) {
+            case MotionEvent.ACTION_DOWN :
                 break;
-            }
-            case MotionEvent.ACTION_MOVE: { // a pointer was moved
-                for (int size = event.getPointerCount(), i = 0; i < size; i++) {
-                }
-                Log.e("WaterWave", "" + event.getPointerCount());
+            case MotionEvent.ACTION_MOVE :
+                for (int i = 0; i < event.getPointerCount(); i++ )
+                    raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
+
                 break;
-            }
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP:
-            case MotionEvent.ACTION_CANCEL: {
-                Log.e("WaterWave", "" + event.getPointerCount());
+            case MotionEvent.ACTION_POINTER_DOWN :
                 break;
-            }
+            case MotionEvent.ACTION_POINTER_UP :
+                for (int i = 0; i < event.getPointerCount(); i++ )
+                    raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
+
+                break;
+            case MotionEvent.ACTION_UP :
+                raindrops.add(new Raindrop((int) event.getX(), (int) event.getY(), 1));
+                break;
         }
-        return super.onTouchEvent(event);
+        return true;
     }
-
-    /*
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        //raindrops.add(new Raindrop((int)event.getX(), (int)event.getY(), 1));
-        for (int i = 0; i < event.getPointerCount(); i++ ) {
-            raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
-        }
-        Log.e("WaterWave", "" + event.getPointerCount());
-
-        return false;
-    }
-    */
 }
 
 class Raindrop {
@@ -130,6 +105,8 @@ class Raindrop {
     int currentRadius = 1;
     int maxRadius = 300;
     float rate = 0.03f;
+    int[] colors = new int[]{0x00f5f5f5, 0x88dfdfdf, 0x00f5f5f5};
+    float[] positions = new float[]{0.4f, 0.7f, 1.0f };
 
     Raindrop(int x, int y, int radius) {
         this.x = x;
@@ -146,7 +123,7 @@ class Raindrop {
     }
 
     public void drawRaindrop(Canvas canvas, Paint paint) {
-        RadialGradient radialGradient = new RadialGradient(x, y, currentRadius, new int[]{0x00f5f5f5, 0x88dfdfdf, 0x00f5f5f5}, new float[]{0.4f, 0.7f, 1.0f }, Shader.TileMode.CLAMP);
+        RadialGradient radialGradient = new RadialGradient(x, y, currentRadius, colors, positions, Shader.TileMode.CLAMP);
         paint.setShader(radialGradient);
         canvas.drawCircle(x, y, currentRadius, paint);
 
