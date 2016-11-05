@@ -78,30 +78,6 @@ public class WaterWave extends View {
         for (int i = 0; i < event.getPointerCount(); i++ )
             raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
 
-        //raindrops.add(new Raindrop((int) event.getX(), (int) event.getY(), 1));
-
-        /*
-        int action = event.getAction() & MotionEvent.ACTION_MASK;
-        switch(action) {
-            case MotionEvent.ACTION_DOWN :
-                break;
-            case MotionEvent.ACTION_MOVE :
-                for (int i = 0; i < event.getPointerCount(); i++ )
-                    raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
-
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN :
-                break;
-            case MotionEvent.ACTION_POINTER_UP :
-                for (int i = 0; i < event.getPointerCount(); i++ )
-                    raindrops.add(new Raindrop((int) event.getX(i), (int) event.getY(i), 1));
-
-                break;
-            case MotionEvent.ACTION_UP :
-               raindrops.add(new Raindrop((int) event.getX(), (int) event.getY(), 1));
-                break;
-        }
-        */
         return true;
     }
 }
